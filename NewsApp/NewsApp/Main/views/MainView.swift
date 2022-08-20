@@ -15,14 +15,19 @@ struct MainView: View {
         ZStack(alignment: .bottom){
             VStack{
                 if self.selected == 0{
-                    GeometryReader{_ in
-                        VStack(spacing: 15){
-                            Spacer()
-                            HomeView()
-                            Image("1").resizable().frame(height: 250).cornerRadius(15)
-                            Spacer()
-                        }.padding()
-                    }
+                    VStack(alignment: .center){
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack {
+                                Spacer()
+                                HeaderView(userName: .constant(""))
+                                NewsTopView()
+                                ForEach((1...10), id: \.self) { model in
+                                    HomeView()
+                                }
+                                
+                            }
+                        }
+                    }.padding(10)
                 }
                 else if self.selected == 1{
                     GeometryReader{_ in
@@ -45,7 +50,7 @@ struct MainView: View {
                     }
                 }
                 
-            }.background(Color.gray)
+            }.background(Color.white)
                 .edgesIgnoringSafeArea(.all)
             
             FloatingTabbar(selected: self.$selected)
