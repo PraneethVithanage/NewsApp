@@ -10,6 +10,8 @@ import SwiftUI
 struct MainView: View {
     @State var selected = 0
     @State private var isActivityItemHomeView: Bool = false
+    @State private var isActivityNewsDetails: Bool = false
+    @State private var isTabbarVisible: Bool = false
     
     var body: some View {
         
@@ -23,12 +25,13 @@ struct MainView: View {
                                     VStack {
                                         Spacer()
                                         NavigationLink(destination: TopUpdateView(),isActive: $isActivityItemHomeView) {EmptyView() }
-                                        HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView)
-                                        NewsTopView()
+                                        NavigationLink(destination: NewsDetailsView( isTabbarVisible: $isTabbarVisible),isActive: $isActivityNewsDetails) {EmptyView()}
+                                        HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView, isTabbarVisible: $isTabbarVisible)
+                                        NewsTopView(isActivityNewsDetails:$isActivityNewsDetails, isTabbarVisible: $isTabbarVisible)
                                         ForEach((1...10), id: \.self) { model in
                                             HomeView()
                                         }
-                                    }.navigationTitle("Hot Updates")
+                                    }
                                 }
                                 
                             }.navigationBarHidden(true)
@@ -36,7 +39,7 @@ struct MainView: View {
                         }.navigationViewStyle(.stack)
                             .navigationBarTitleDisplayMode(.inline)
                         
-                    }.padding(10)
+                    }
                 }
                 else if self.selected == 1{
                     GeometryReader{_ in
@@ -61,8 +64,9 @@ struct MainView: View {
                 
             }.background(Color.white)
                 .edgesIgnoringSafeArea(.all)
-            
-            FloatingTabbar(selected: self.$selected)
+            if !isTabbarVisible{
+                FloatingTabbar(selected: self.$selected)
+            }
         }
     }
 }

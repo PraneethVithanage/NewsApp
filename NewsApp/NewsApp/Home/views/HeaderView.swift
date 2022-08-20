@@ -11,6 +11,7 @@ struct HeaderView: View {
     
     @Binding var userName: String
     @Binding var isNotify: Bool
+    @Binding var isTabbarVisible: Bool
     
     var body: some View {
         
@@ -31,6 +32,7 @@ struct HeaderView: View {
                     .clipShape(Circle())
                     .onTapGesture {
                         self.isNotify.toggle()
+                        self.isTabbarVisible.toggle()
                     }
             }.padding(.leading)
                 .padding(.trailing)

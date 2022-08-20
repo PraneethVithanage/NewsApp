@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct NewsTopView: View {
+    @Binding var isActivityNewsDetails: Bool
+    @Binding var isTabbarVisible: Bool
+    
     var entries = ["Health","Technology","Art","Education","Technologdy","Artn","Educationn","Technologyn","Artgg","Educationgb"]
     @State private var selectedItem: String? = "Health"
     var body: some View {
@@ -22,6 +25,9 @@ struct NewsTopView: View {
                                 .clipped()
                                 .frame(width: UIScreen.main.bounds.width - 50, height: 220)
                                 .cornerRadius(20)
+                        }.onTapGesture{
+                            self.isActivityNewsDetails.toggle()
+                            self.isTabbarVisible.toggle()
                         }
                     }
                 }.padding(.all, 10)
@@ -51,8 +57,3 @@ struct NewsTopView: View {
     }
 }
 
-struct NewsTopView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewsTopView()
-    }
-}
