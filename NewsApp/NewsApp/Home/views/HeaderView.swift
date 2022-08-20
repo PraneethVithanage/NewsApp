@@ -12,6 +12,7 @@ struct HeaderView: View {
     @Binding var userName: String
     @Binding var isNotify: Bool
     @Binding var isTabbarVisible: Bool
+    @Binding var isAllVisible: Bool
     
     var body: some View {
         
@@ -42,6 +43,10 @@ struct HeaderView: View {
                 Spacer()
                 Text("see All")
                     .foregroundColor(Color.blue)
+                    .onTapGesture {
+                        self.isTabbarVisible.toggle()
+                        self.isAllVisible.toggle()
+                    }
             }.padding(.leading)
                 .padding(.trailing)
         }.padding(.top, 30)

@@ -12,6 +12,7 @@ struct MainView: View {
     @State private var isActivityItemHomeView: Bool = false
     @State private var isActivityNewsDetails: Bool = false
     @State private var isTabbarVisible: Bool = false
+    @State private var isNewsList: Bool = false
     
     var body: some View {
         
@@ -24,16 +25,20 @@ struct MainView: View {
                                 ScrollView(.vertical, showsIndicators: false) {
                                     VStack {
                                         Spacer()
-                                        NavigationLink(destination: TopUpdateView(),isActive: $isActivityItemHomeView) {EmptyView() }
+                                        NavigationLink(destination: TopUpdateView(isTabbarVisible: $isTabbarVisible),isActive: $isActivityItemHomeView) {EmptyView() }
+                                        
                                         NavigationLink(destination: NewsDetailsView( isTabbarVisible: $isTabbarVisible),isActive: $isActivityNewsDetails) {EmptyView()}
-                                        HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView, isTabbarVisible: $isTabbarVisible)
+                                        
+                                        NavigationLink(destination: NewsListView(isTabbarVisible: $isTabbarVisible, userName: .constant("")),isActive: $isNewsList) {EmptyView()}
+                                        
+                                        HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView, isTabbarVisible: $isTabbarVisible, isAllVisible: $isNewsList)
+                                        
                                         NewsTopView(isActivityNewsDetails:$isActivityNewsDetails, isTabbarVisible: $isTabbarVisible)
                                         ForEach((1...10), id: \.self) { model in
                                             HomeView()
                                         }
                                     }
                                 }
-                                
                             }.navigationBarHidden(true)
                                 .ignoresSafeArea()
                         }.navigationViewStyle(.stack)

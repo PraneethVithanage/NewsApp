@@ -10,9 +10,9 @@ import SwiftUI
 struct NewsTopView: View {
     @Binding var isActivityNewsDetails: Bool
     @Binding var isTabbarVisible: Bool
-    
     var entries = ["Health","Technology","Art","Education","Technologdy","Artn","Educationn","Technologyn","Artgg","Educationgb"]
     @State private var selectedItem: String? = "Health"
+    
     var body: some View {
         VStack {
             ScrollView(.horizontal, showsIndicators: false) {
