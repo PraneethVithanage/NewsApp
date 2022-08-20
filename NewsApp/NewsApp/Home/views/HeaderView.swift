@@ -10,6 +10,7 @@ import SwiftUI
 struct HeaderView: View {
     
     @Binding var userName: String
+    @Binding var isNotify: Bool
     
     var body: some View {
         
@@ -28,7 +29,9 @@ struct HeaderView: View {
                     .cornerRadius(25)
                     .background(Theme.primary.color)
                     .clipShape(Circle())
-                
+                    .onTapGesture {
+                        self.isNotify.toggle()
+                    }
             }.padding(.leading)
                 .padding(.trailing)
             HStack {
@@ -43,9 +46,3 @@ struct HeaderView: View {
     }
 }
 
-
-struct HeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        HeaderView(userName: .constant(""))
-    }
-}

@@ -9,24 +9,33 @@ import SwiftUI
 
 struct MainView: View {
     @State var selected = 0
+    @State private var isActivityItemHomeView: Bool = false
     
     var body: some View {
         
         ZStack(alignment: .bottom){
             VStack{
-                if self.selected == 0{
+                if self.selected == 0 {
                     VStack(alignment: .center){
-                        ScrollView(.vertical, showsIndicators: false) {
+                        NavigationView {
                             VStack {
-                                Spacer()
-                                HeaderView(userName: .constant(""))
-                                NewsTopView()
-                                ForEach((1...10), id: \.self) { model in
-                                    HomeView()
+                                ScrollView(.vertical, showsIndicators: false) {
+                                    VStack {
+                                        Spacer()
+                                        NavigationLink(destination: TopUpdateView(),isActive: $isActivityItemHomeView) {EmptyView() }
+                                        HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView)
+                                        NewsTopView()
+                                        ForEach((1...10), id: \.self) { model in
+                                            HomeView()
+                                        }
+                                    }.navigationTitle("Hot Updates")
                                 }
                                 
-                            }
-                        }
+                            }.navigationBarHidden(true)
+                                .ignoresSafeArea()
+                        }.navigationViewStyle(.stack)
+                            .navigationBarTitleDisplayMode(.inline)
+                        
                     }.padding(10)
                 }
                 else if self.selected == 1{
