@@ -80,7 +80,7 @@ struct LoginView: View {
                     .background(Theme.primary.color)
                     .cornerRadius(10)
                     
-                    NavigationLink(destination: MainView(), isActive: $showingLoginScreen) {
+                    NavigationLink(destination: MainView(username:username), isActive: $showingLoginScreen) {
                         EmptyView()
                     }
                 }

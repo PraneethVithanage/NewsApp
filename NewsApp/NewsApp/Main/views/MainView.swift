@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct MainView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var selected = 0
     @State private var isActivityItemHomeView: Bool = false
     @State private var isActivityNewsDetails: Bool = false
     @State private var isTabbarVisible: Bool = false
     @State private var isNewsList: Bool = false
-    
+    var username: String = "username"
     var body: some View {
         
         ZStack(alignment: .bottom){
@@ -30,12 +31,25 @@ struct MainView: View {
                                         NavigationLink(destination: NewsDetailsView( isTabbarVisible: $isTabbarVisible),isActive: $isActivityNewsDetails) {EmptyView()}
                                         
                                         NavigationLink(destination: NewsListView(isTabbarVisible: $isTabbarVisible, userName: .constant("")),isActive: $isNewsList) {EmptyView()}
-                                        
-                                        HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView, isTabbarVisible: $isTabbarVisible, isAllVisible: $isNewsList)
-                                        
-                                        NewsTopView(isActivityNewsDetails:$isActivityNewsDetails, isTabbarVisible: $isTabbarVisible)
-                                        ForEach((1...10), id: \.self) { model in
-                                            HomeView()
+                                        VStack{
+                                            Spacer()
+                                            HStack {
+                                                Text("User: " + username)
+                                                    .foregroundColor(.black)
+                                                Spacer()
+                                                Text("Log out")
+                                                    .foregroundColor(.red)
+                                                    .onTapGesture {
+                                                        self.presentationMode.wrappedValue.dismiss()
+                                                    }
+                                            }.padding(.top, 25)
+                                                .padding(.horizontal, 25)
+                                            HeaderView(userName: .constant(""),isNotify:$isActivityItemHomeView, isTabbarVisible: $isTabbarVisible, isAllVisible: $isNewsList)
+                                            
+                                            NewsTopView(isActivityNewsDetails:$isActivityNewsDetails, isTabbarVisible: $isTabbarVisible)
+                                            ForEach((1...10), id: \.self) { model in
+                                                HomeView()
+                                            }
                                         }
                                     }
                                 }
@@ -69,6 +83,7 @@ struct MainView: View {
                 
             }.background(Color.white)
                 .edgesIgnoringSafeArea(.all)
+                .navigationBarHidden(true)
             if !isTabbarVisible{
                 FloatingTabbar(selected: self.$selected)
             }

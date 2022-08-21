@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+    @ObservedObject var viewModel = HomeViewModel()
     //    var userData: ModelClass
     var body: some View {
         VStack {
